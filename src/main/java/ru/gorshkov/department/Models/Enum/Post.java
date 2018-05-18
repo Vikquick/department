@@ -1,25 +1,25 @@
 package ru.gorshkov.department.Models.Enum;
 
 public enum Post {
-    POST1 {
+    Junior {
         @Override
         public String toString() {
-            return "POST1";
+            return "Junior";
         }
-    }, POST2 {
+    }, Middle {
         @Override
         public String toString() {
-            return "POST2";
+            return "Middle";
         }
-    }, POST3 {
+    }, Specialist {
         @Override
         public String toString() {
-            return "POST3";
+            return "Specialist";
         }
-    }, POST4 {
+    }, Lead {
         @Override
         public String toString() {
-            return "POST4";
+            return "Lead";
         }
     };
 

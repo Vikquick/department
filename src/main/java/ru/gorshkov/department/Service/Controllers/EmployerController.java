@@ -10,6 +10,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.gorshkov.department.Models.Impl.EmployerImpl;
 import ru.gorshkov.department.Models.Intf.Employer;
+import ru.gorshkov.department.Service.Mappers.DepartmentMapper;
 import ru.gorshkov.department.Service.Mappers.EmployerMapper;
 import ru.gorshkov.department.Service.Utilities.Exception.CommonException;
 import ru.gorshkov.department.Service.Utilities.Intf.DepartmentUtilities;
@@ -24,11 +25,13 @@ public class EmployerController {
 
     private final EmployerMapper employerMapper;
     private final DepartmentUtilities departmentUtilities;
+    private final DepartmentMapper departmentMapper;
 
     @Autowired
-    public EmployerController(EmployerMapper employerMapper, DepartmentUtilities departmentUtilities) {
+    public EmployerController(EmployerMapper employerMapper, DepartmentUtilities departmentUtilities, DepartmentMapper departmentMapper) {
         this.employerMapper = employerMapper;
         this.departmentUtilities = departmentUtilities;
+        this.departmentMapper = departmentMapper;
     }
 
 
@@ -104,7 +107,7 @@ public class EmployerController {
         try {
             employerMapper.throwHead(id);
             employerMapper.transportToAnotherDepartment(id, departmentid);
-            LOGGER.info("Employer was transport to another department: " + employerMapper.getEmployerById(departmentid).getName());
+            LOGGER.info("Employer was transport to another department: " + departmentMapper.getDepartmentById(departmentid).getName());
             return new ResponseEntity<>(employerMapper.getEmployerById(id), HttpStatus.OK);
         } catch (NullPointerException exc) {
             LOGGER.error("No departments or employers found with this id");
@@ -130,21 +133,26 @@ public class EmployerController {
 
     @GetMapping(path = "/getEmployersHead")
     public ResponseEntity getHeadByEmployer(@RequestParam("id") Integer id) {
-        LOGGER.info("Getting head of employer with id = {}", id);
-        EmployerImpl head = employerMapper.getHeadByEmployer(id);
-        LOGGER.info(head.toString());
-        return new ResponseEntity<>(head, HttpStatus.OK);
+        try {
+            LOGGER.info("Getting head of employer with id = {}", id);
+            EmployerImpl head = employerMapper.getHeadByEmployer(id);
+            LOGGER.info(head.toString());
+            return new ResponseEntity<>(head, HttpStatus.OK);
+        } catch (NullPointerException exc) {
+            LOGGER.error("No such employer");
+            return new ResponseEntity<>("No such employer", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(path = "/unemploy")
-    public ResponseEntity setFired(@RequestParam("id") Integer id) {
+    public ResponseEntity setFired(@RequestParam("id") Integer id, @RequestParam("dateofunemployment") Date dateofunemployment) {
         LOGGER.info("Firing employer with id = {}", id);
         Employer employer;
         try {
             employer = employerMapper.getEmployerById(id);
             if (employer != null) {
-                departmentUtilities.isDateOfUnemploymentValid(employer.getDateofunemployment(), new Date());
-                employerMapper.setFired(id, new Date());
+                departmentUtilities.isDateOfUnemploymentValid(employer.getDateofemployment(), dateofunemployment);
+                employerMapper.setFired(id, dateofunemployment);
                 LOGGER.info("Employer fired");
                 return new ResponseEntity<>(employerMapper.getEmployerById(id), HttpStatus.OK);
             } else return new ResponseEntity<>("No such employer", HttpStatus.BAD_REQUEST);
@@ -158,7 +166,10 @@ public class EmployerController {
                                             @RequestParam("name") String name,
                                             @RequestParam("lastname") String lastname) {
         LOGGER.info("Looking for employer with fio: {} {} {}", firstname, name, lastname);
-        EmployerImpl employer = employerMapper.getEmployerByFio(firstname, name, lastname);
+        EmployerImpl employer;
+        if (!lastname.equals("")) {
+            employer = employerMapper.getEmployerByFio(firstname, name, lastname);
+        } else employer = employerMapper.getEmployerByFi(firstname, name);
         if (employer != null) {
             LOGGER.info(employer.toString());
             return new ResponseEntity<>(employer, HttpStatus.OK);

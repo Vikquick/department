@@ -53,6 +53,7 @@ public interface DepartmentMapper {
     @Insert("insert into salary (departmentid, salarysum, date) values (#{departmentid}, #{salarysum}, #{date})")
     void countFonds(@Param("departmentid") Integer departmentid, @Param("salarysum") Integer salarysum, @Param("date") Date date);
 
-    @Delete("remove * from salary where departmentid=#{departmentid}")
+    @Delete("DELETE from salary where departmentid=#{departmentid}")
     void removeSalary(@Param("departmentid") Integer Departmentid);
+
 }

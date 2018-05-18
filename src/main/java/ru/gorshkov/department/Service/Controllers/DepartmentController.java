@@ -87,8 +87,8 @@ public class DepartmentController {
         }
 
 
-    @PostMapping(path = "/update/{id}")
-    public ResponseEntity updateDepartment(@PathVariable("id") Integer id, @RequestParam("name") String name) {
+    @PostMapping(path = "/update")
+    public ResponseEntity updateDepartment(@RequestParam("id") Integer id, @RequestParam("name") String name) {
 
         try {
             departmentUtilities.isNameUnique(name);
@@ -166,8 +166,8 @@ public class DepartmentController {
         }
     }
 
-    @PostMapping(path = "/transport/{id}")
-    public ResponseEntity transportDepartment(@PathVariable("id") Integer id, @RequestParam("departmentid") Integer departmentid) {
+    @PostMapping(path = "/transport")
+    public ResponseEntity transportDepartment(@RequestParam("id") Integer id, @RequestParam("departmentid") Integer departmentid) {
         LOGGER.info("Transporting department with id {} to root with id = {}", id, departmentid);
         try {
             Integer oldDepartmentid = departmentMapper.getDepartmentById(id).getDepartmentid();

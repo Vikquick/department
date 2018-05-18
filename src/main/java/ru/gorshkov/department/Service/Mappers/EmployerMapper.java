@@ -29,7 +29,7 @@ public interface EmployerMapper {
     void addEmployer(EmployerImpl employer) throws DataIntegrityViolationException;
 
     @Update("UPDATE employer SET (firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid)" +
-            " = (#{firstname}, #{name}, #{lastname}, #{gender}, #{date}, #{phone}, #{email}, #{dateofemployment}, #{dateofunemployment}, #{post}, #{salary}, #{head}, #{departmentid}) WHERE id = #{id}")
+            " = (#{firstname}, #{name}, #{lastname}, #{gender}, #{dateofbirth}, #{phone}, #{email}, #{dateofemployment}, #{dateofunemployment}, #{post}, #{salary}, #{head}, #{departmentid}) WHERE id = #{id}")
     void updateEmployer(EmployerImpl employer) throws DataIntegrityViolationException;
 
 
@@ -48,9 +48,12 @@ public interface EmployerMapper {
     @Select("SELECT * FROM employer WHERE departmentid = (SELECT departmentid FROM employer WHERE id = #{id})  AND head = TRUE;")
     EmployerImpl getHeadByEmployer(@Param("id") Integer id);
 
-    @Update("update employer set dateofunemployment = #{date}, fired=true where id = #{id}")
-    void setFired(@Param("id") Integer id, @Param("date") Date date);
+    @Update("update employer set dateofunemployment = #{dateofunemployment}, fired=true where id = #{id}")
+    void setFired(@Param("id") Integer id, @Param("dateofunemployment") Date dateofunemployment);
 
     @Select("SELECT * FROM employer WHERE (firstname, name, lastname) = (#{firstname}, #{name}, #{lastname})")
     EmployerImpl getEmployerByFio(@Param("firstname") String firstname, @Param("name") String name, @Param("lastname") String lastname);
+
+    @Select("SELECT * FROM employer WHERE (firstname, name) = (#{firstname}, #{name})")
+    EmployerImpl getEmployerByFi(@Param("firstname") String firstname, @Param("name") String name);
 }
