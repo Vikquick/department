@@ -66,25 +66,25 @@ public class DepartmentController {
     @PostMapping(path = "/add")
     public ResponseEntity createDepartment(@ModelAttribute DepartmentImpl department) {
 
-            try {
-                departmentUtilities.isNameUnique(department.getName());
-                if (department.getDepartmentid() != null) {
-                    departmentMapper.createDepartment(department);
-                    writeDown(departmentMapper.getDepartmentByName(department.getName()).getId(), "added");
-                    LOGGER.info("Department added");
-                    return new ResponseEntity<>(department, HttpStatus.OK);
-                } else {
-                    LOGGER.info("Executed" + department.getName() + department.getCreationdate());
-                    departmentMapper.createMainDepartment(department);
-                    writeDown(departmentMapper.getDepartmentByName(department.getName()).getId(), "added");
-                    LOGGER.info("Department added");
-                    return new ResponseEntity<>(department, HttpStatus.OK);
-                }
-            } catch (CommonException exc) {
-                LOGGER.error(exc);
-                return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
+        try {
+            departmentUtilities.isNameUnique(department.getName());
+            if (department.getDepartmentid() != null) {
+                departmentMapper.createDepartment(department);
+                writeDown(departmentMapper.getDepartmentByName(department.getName()).getId(), "added");
+                LOGGER.info("Department added");
+                return new ResponseEntity<>(department, HttpStatus.OK);
+            } else {
+                LOGGER.info("Executed" + department.getName() + department.getCreationdate());
+                departmentMapper.createMainDepartment(department);
+                writeDown(departmentMapper.getDepartmentByName(department.getName()).getId(), "added");
+                LOGGER.info("Department added");
+                return new ResponseEntity<>(department, HttpStatus.OK);
             }
+        } catch (CommonException exc) {
+            LOGGER.error(exc);
+            return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
 
 
     @PostMapping(path = "/update")
@@ -196,10 +196,12 @@ public class DepartmentController {
 
     @GetMapping(path = "/countSalary")
     public ResponseEntity countSalary(@RequestParam("id") Integer id) {
-        LOGGER.info("Countisng salary for department with id {}", id);
-        try {
-            return new ResponseEntity<>(departmentMapper.countSalary(id), HttpStatus.OK);
-        } catch (NullPointerException exc) {
+        LOGGER.info("Counting salary for department with id {}", id);
+        Integer salary = salary = departmentMapper.countSalary(id);
+        if (salary != null) {
+            LOGGER.info("Salary of department with id = {} is - {}", id, salary);
+            return new ResponseEntity<>(salary, HttpStatus.OK);
+        } else {
             LOGGER.info("No department exist with id = {}", id);
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }

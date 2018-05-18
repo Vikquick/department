@@ -11,10 +11,16 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import ru.gorshkov.department.Service.Mappers.DepartmentMapper;
 import ru.gorshkov.department.Service.Mappers.EmployerMapper;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableSwagger2
 public class AppConfig {
 
     @Autowired
@@ -58,5 +64,14 @@ public class AppConfig {
         mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory());
         mapperFactoryBean.afterPropertiesSet();
         return mapperFactoryBean.getObject();
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 }
