@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.gorshkov.department.Models.Impl.DepartmentImpl;
 import ru.gorshkov.department.Models.Impl.EmployerImpl;
 
@@ -15,6 +16,7 @@ import ru.gorshkov.department.Models.Impl.EmployerImpl;
 @ComponentScan(basePackages = "ru.gorshkov.department")
 @MapperScan("ru.gorshkov.department.Service.Mappers")
 @MappedTypes({DepartmentImpl.class, EmployerImpl.class})
+@EnableScheduling
 public class DepartmentApplication {
 
     private static final Logger LOGGER = LogManager.getLogger(DepartmentApplication.class);

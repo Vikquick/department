@@ -1,11 +1,12 @@
 package ru.gorshkov.department.Models.Impl;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 public class DepartmentInfo {
 
     private String name;
-    private LocalDate creationdate;
+    private Date creationdate;
     private String fiohead;
     private Integer countemployers;
 
@@ -13,7 +14,7 @@ public class DepartmentInfo {
     public DepartmentInfo() {
     }
 
-    public DepartmentInfo(String name, LocalDate creationdate, String fiohead, Integer countemployers) {
+    public DepartmentInfo(String name, Date creationdate, String fiohead, Integer countemployers) {
         this.name = name;
         this.creationdate = creationdate;
         this.fiohead = fiohead;
@@ -28,11 +29,11 @@ public class DepartmentInfo {
         this.name = name;
     }
 
-    public LocalDate getCreationdate() {
+    public Date getCreationdate() {
         return creationdate;
     }
 
-    public void setCreationdate(LocalDate creationdate) {
+    public void setCreationdate(Date creationdate) {
         this.creationdate = creationdate;
     }
 
@@ -50,5 +51,15 @@ public class DepartmentInfo {
 
     public void setCountemployers(Integer countemployers) {
         this.countemployers = countemployers;
+    }
+
+    @Override
+    public String toString() {
+        return "DepartmentInfo{" +
+                "name='" + name + '\'' +
+                ", creationdate=" + creationdate +
+                ", fiohead='" + fiohead + '\'' +
+                ", countemployers=" + countemployers +
+                '}';
     }
 }

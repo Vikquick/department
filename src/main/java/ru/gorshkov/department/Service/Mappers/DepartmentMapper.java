@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gorshkov.department.Models.Impl.DepartmentImpl;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -19,13 +19,13 @@ public interface DepartmentMapper {
     DepartmentImpl getDepartmentByName(String name) throws NullPointerException;
 
     @Update("UPDATE department SET name = #{name} WHERE id = #{id}")
-    DepartmentImpl updateDepartment(@Param("name") String name, @Param("id") Integer id);
+    void updateDepartment(@Param("name") String name, @Param("id") Integer id);
 
     @Insert("INSERT INTO department (name, creationdate) VALUES (#{name}, #{creationdate})")
-    void createMainDepartment(@Param("name") String name, @Param("creationdate") LocalDate creationdate);
+    void createMainDepartment(DepartmentImpl department);
 
     @Insert("INSERT INTO department (name, creationdate, departmentid) VALUES (#{name}, #{creationdate}, #{departmentid})")
-    void createDepartment(@Param("name") String name, @Param("creationdate") LocalDate creationdate, @Param("departmentid") Integer departmentid);
+    void createDepartment(DepartmentImpl department);
 
     @Delete("DELETE FROM department WHERE id =#{id}")
     void remove(Integer id) throws DataIntegrityViolationException, NullPointerException;
@@ -38,4 +38,21 @@ public interface DepartmentMapper {
 
     @Update("UPDATE department SET departmentid = #{departmentid} WHERE id = #{id}")
     void transportDepartment(@Param("id") Integer id, @Param("departmentid") Integer departmentid) throws NullPointerException;
+
+    @Select("SELECT sum(salary) FROM employer where departmentid = #{id}")
+    Integer countSalary(@Param("id") Integer id) throws NullPointerException;
+
+    @Insert("INSERT into departmenthistory (departmentid, action, date) values (#{departmentid},#{action},#{date})")
+    void writeDown(@Param("departmentid") Integer departmentid,
+                   @Param("action") String action,
+                   @Param("date") Date date);
+
+    @Select("select * from department")
+    List<DepartmentImpl> getAllDepartments();
+
+    @Insert("insert into salary (departmentid, salarysum, date) values (#{departmentid}, #{salarysum}, #{date})")
+    void countFonds(@Param("departmentid") Integer departmentid, @Param("salarysum") Integer salarysum, @Param("date") Date date);
+
+    @Delete("remove * from salary where departmentid=#{departmentid}")
+    void removeSalary(@Param("departmentid") Integer Departmentid);
 }

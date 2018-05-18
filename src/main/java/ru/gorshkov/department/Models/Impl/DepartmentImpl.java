@@ -3,8 +3,8 @@ package ru.gorshkov.department.Models.Impl;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.gorshkov.department.Models.Intf.Department;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DepartmentImpl implements Department {
@@ -13,11 +13,11 @@ public class DepartmentImpl implements Department {
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate creationdate;
+    private Date creationdate;
     private Integer departmentid;
-    List<DepartmentImpl> child = new ArrayList<>();
+    private List<DepartmentImpl> child = new ArrayList<>();
 
-    public DepartmentImpl(Integer id, String name, LocalDate creationdate, Integer departmentid) {
+    public DepartmentImpl(Integer id, String name, Date creationdate, Integer departmentid) {
         this.id = id;
         this.name = name;
         this.creationdate = creationdate;
@@ -27,7 +27,7 @@ public class DepartmentImpl implements Department {
     public DepartmentImpl() {
     }
 
-    public DepartmentImpl(String name, LocalDate creationdate, Integer departmentid) {
+    public DepartmentImpl(String name, Date creationdate, Integer departmentid) {
         this.name = name;
         this.creationdate = creationdate;
         this.departmentid = departmentid;
@@ -53,31 +53,49 @@ public class DepartmentImpl implements Department {
         this.name = name;
     }
 
-    public LocalDate getCreationdate() {
+    @Override
+    public Date getCreationdate() {
         return creationdate;
     }
 
-    public void setCreationdate(LocalDate creationdate) {
+    @Override
+    public void setCreationdate(Date creationdate) {
         this.creationdate = creationdate;
     }
 
+    @Override
     public Integer getDepartmentid() {
         return departmentid;
     }
 
+    @Override
     public void setDepartmentid(Integer departmentid) {
         this.departmentid = departmentid;
     }
 
+    @Override
     public List<DepartmentImpl> getChild() {
         return child;
     }
 
+    @Override
     public void addChild(DepartmentImpl child) {
         this.child.add(child);
     }
 
+    @Override
     public void setChild(List<DepartmentImpl> child) {
         this.child = child;
+    }
+
+    @Override
+    public String toString() {
+        return "DepartmentImpl{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creationdate=" + creationdate +
+                ", departmentid=" + departmentid +
+                ", child=" + child +
+                '}';
     }
 }
