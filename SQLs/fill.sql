@@ -1,0 +1,21 @@
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (2, 'Бухгалтерия Москва', '2018-05-07', 6);
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (13, 'Счетный отдел', '2018-05-10', 2);
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (16, 'Отдел управления персоналом', '2018-05-09', 6);
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (17, 'Младшая рассчетная палата', '2018-05-10', 13);
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (6, 'ГО Москва', '1994-10-19', null);
+INSERT INTO department (id, name, creationdate, departmentid) VALUES (15, 'Отдел кредитования', '2018-05-09', 13);
+
+
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (12, 'Быков', 'Алексей', 'Николаевич', 'MALE', '1978-12-06', '79961580887', 'byyyykov@mail.ru', '2018-01-06', null, 'Junior', 64000, false, 13, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (17, 'Быканова', 'Алена', 'Владимировна', 'FEMALE', '1993-04-14', '+79278563651', 'bykanova_av@gmail.com', '2018-05-14', null, 'Middle', 70000, true, 13, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (11, 'Бормотов', 'Владислав', 'Витальевич', 'MALE', '1994-12-09', '79625698575', 'vladborm@mail.ru', '2017-10-05', null, 'Junior', 35000, true, 6, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (4, 'Серпокрылов', 'Дмитрий', null, 'MALE', '1994-05-18', '+79273224256', 'Serpokrilov_dv@tkbbank.ru', '2017-11-01', null, 'Junior', 45000, true, 2, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (6, 'Самсонов', 'Александр', 'Алексеевич', 'MALE', '2018-05-01', '+7909370877', 'Asam@mail.com', '2018-05-07', null, 'Middle', 30000, false, 6, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (5, 'Енин', 'Александр', null, 'MALE', '1990-02-01', '+79963420253', 'enin_nv@tkbbank.ru', '2015-02-01', null, 'Specialist', 30000, false, 13, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (18, 'Золотилов', 'Влад', 'Владиславович', 'MALE', '1995-03-09', '+73656521458', 'zolotilovV_v@mail.ru', '2015-05-22', null, 'Junior', 65000, true, 16, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (19, 'Козырева', 'Татьяна', 'Николаевна', 'FEMALE', '1993-11-26', '+79256588779', 'Koztatnik@yandex.ru', '2016-09-03', null, 'Middle', 85000, true, 15, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (20, 'Лошкарев', 'Евгений', 'Васильевич', 'MALE', '1984-11-01', '+79277856536', 'loskarevvv@gmail.com', '2018-05-01', null, 'Specialist', 98000, true, 17, false);
+INSERT INTO public.employer (id, firstname, name, lastname, gender, dateofbirth, phone, email, dateofemployment, dateofunemployment, post, salary, head, departmentid, fired) VALUES (22, 'Долматова', 'Светлана', 'Александровна', 'FEMALE', '1997-06-13', '+79963427923', 'dolm_sv@rambler.com', '2019-04-10', null, 'Junior', 30000, false, 17, false);
+
+INSERT INTO public.departmenthistory (id, departmentid, action, date) VALUES (1, 19, 'added', '2018-05-18');
+INSERT INTO public.departmenthistory (id, departmentid, action, date) VALUES (2, 19, 'removed', '2018-05-18');
