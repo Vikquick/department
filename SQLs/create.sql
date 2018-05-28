@@ -6,10 +6,6 @@ create sequence employer_id_pk_seq;
 
 create sequence salary_id_seq;
 
-create type gender as enum ('MALE', 'FEMALE');
-
-create type post as enum ('POST1', 'POST2', 'POST3', 'POST4');
-
 create table if not exists department
 (
 	id integer default nextval('department_id_pk_seq'::regclass) not null
